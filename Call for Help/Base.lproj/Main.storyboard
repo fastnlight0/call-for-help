@@ -16,10 +16,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="phone.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="cNM-Db-kC9">
-                                <rect key="frame" x="57" y="297.5" width="300" height="300"/>
-                                <color key="tintColor" systemColor="systemRedColor"/>
-                            </imageView>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Number to call" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sLI-wb-xco">
                                 <rect key="frame" x="100" y="44" width="214" height="34"/>
                                 <constraints>
@@ -28,19 +24,32 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" keyboardType="phonePad" returnKeyType="done" textContentType="tel"/>
                             </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TTW-En-1tu">
+                                <rect key="frame" x="57" y="297.5" width="300" height="299"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="300" id="Dd9-Ki-aHy"/>
+                                    <constraint firstAttribute="height" constant="300" id="qRs-a1-S9j"/>
+                                </constraints>
+                                <color key="tintColor" systemColor="systemRedColor"/>
+                                <state key="normal" backgroundImage="phone.circle.fill" catalog="system"/>
+                                <connections>
+                                    <action selector="call:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ISX-42-obd"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="cNM-Db-kC9" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="57" id="1wV-uV-Ijj"/>
-                            <constraint firstItem="cNM-Db-kC9" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="253" id="9F9-fn-7xv"/>
-                            <constraint firstItem="sLI-wb-xco" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="100" id="FgG-Ag-BWk"/>
+                            <constraint firstItem="TTW-En-1tu" firstAttribute="centerX" secondItem="sLI-wb-xco" secondAttribute="centerX" id="2te-hh-Gku"/>
+                            <constraint firstItem="TTW-En-1tu" firstAttribute="top" secondItem="sLI-wb-xco" secondAttribute="bottom" constant="219" id="HTE-Bo-7ca"/>
                             <constraint firstItem="sLI-wb-xco" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="Tgh-wB-MKn"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="cNM-Db-kC9" secondAttribute="bottom" constant="264" id="ciP-Xq-Dzo"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="cNM-Db-kC9" secondAttribute="trailing" constant="57" id="nwd-z4-ALm"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="sLI-wb-xco" secondAttribute="trailing" constant="100" id="tmQ-t1-sjF"/>
+                            <constraint firstItem="sLI-wb-xco" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="100" id="Vxi-Dt-XTm"/>
+                            <constraint firstItem="sLI-wb-xco" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="lxC-wv-da2"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="numberField" destination="sLI-wb-xco" id="NSS-wp-pIC"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
