@@ -8,9 +8,10 @@
 import UIKit
 import AVFoundation
 import Speech
+import CoreData
 
 class ViewController: UIViewController, SFSpeechRecognizerDelegate {
-    //Define some constants
+    //Define some variables
     private let speechRecognizer = SFSpeechRecognizer(locale: Locale(identifier: "en-US"))!
     
     private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
@@ -19,9 +20,62 @@ class ViewController: UIViewController, SFSpeechRecognizerDelegate {
     
     private let audioEngine = AVAudioEngine()
     
+    
+    
     @IBOutlet weak var numberField: UITextField!
+    //Save the phone number when it is changed
+    @IBAction func valueChanged(_ sender: Any) {
+        guard let appDelegate =
+            UIApplication.shared.delegate as? AppDelegate else {
+            return
+          }
+        let managedContext =
+            appDelegate.persistentContainer.viewContext
+          
+          let entity =
+            NSEntityDescription.entity(forEntityName: "Number",
+                                       in: managedContext)!
+          
+          let numb = NSManagedObject(entity: entity,
+                                       insertInto: managedContext)
+          
+        numb.setValue(numberField.text, forKeyPath: "num")
+          
+          do {
+            try managedContext.save()
+          } catch let error as NSError {
+            print("Could not save. \(error), \(error.userInfo)")
+          }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
+        //Load the phone number from previously
+          guard let appDelegate =
+            UIApplication.shared.delegate as? AppDelegate else {
+              return
+          }
+          
+          let managedContext =
+            appDelegate.persistentContainer.viewContext
+          
+          let fetchRequest =
+            NSFetchRequest<NSManagedObject>(entityName: "Number")
+          
+          do {
+            let numb = try managedContext.fetch(fetchRequest)
+            if numb.count == 1{
+                numberField.text = (numb[0].value(forKey: "num") as! String)
+            } else {
+                print(numb.count)
+            }
+          } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+          }
+        
+        //Hide the keyboard when the user taps out of it
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.dismissKeyboard (_:)))
+        self.view.addGestureRecognizer(tapGesture)
+        
         //Request access for speech recognition
         SFSpeechRecognizer.requestAuthorization({_ in})
         do{
@@ -104,6 +158,10 @@ class ViewController: UIViewController, SFSpeechRecognizerDelegate {
             //Call the phone number in the text box
             UIApplication.shared.open(url)
         }
+    }
+    //Hide the keyboard when the user taps out of it
+    @objc func dismissKeyboard (_ sender: UITapGestureRecognizer) {
+        numberField.resignFirstResponder()
     }
     
 
