@@ -25,7 +25,7 @@ class ViewController: UIViewController, SFSpeechRecognizerDelegate {
     
     var called = false
     
-    @IBOutlet weak public var numberField: UITextField!
+    @IBOutlet weak var numberField: UITextField!
     //Save the phone number when it is changed
     @IBAction func valueChanged(_ sender: Any) {
           do {
@@ -66,6 +66,7 @@ class ViewController: UIViewController, SFSpeechRecognizerDelegate {
           }
     }
     override func viewDidLoad() {
+        //This function runs when the app is opened
         super.viewDidLoad()
         //Load the phone number from previously
           guard let appDelegate =
@@ -95,15 +96,16 @@ class ViewController: UIViewController, SFSpeechRecognizerDelegate {
         //Request access for speech recognition
         SFSpeechRecognizer.requestAuthorization({_ in})
         do{
-            //Prepare the microphone
+            //Kill old tasks (if any)
             recognitionTask?.cancel()
             self.recognitionTask = nil
             speechRecognizer.delegate = self
+            //Prepare the microphone
             let audioSession = AVAudioSession.sharedInstance()
             try audioSession.setCategory(.record, mode: .measurement, options: .duckOthers)
             try audioSession.setActive(true, options: .notifyOthersOnDeactivation)
             let inputNode = audioEngine.inputNode
-            //Prepare a recognition request, which allows me to pr
+            //Prepare a recognition request, which allows me to process speech
             recognitionRequest = SFSpeechAudioBufferRecognitionRequest()
             guard let recognitionRequest = recognitionRequest else { fatalError("Unable to create a SFSpeechAudioBufferRecognitionRequest object") }
             recognitionRequest.shouldReportPartialResults = true
@@ -183,15 +185,16 @@ class ViewController: UIViewController, SFSpeechRecognizerDelegate {
         
         SFSpeechRecognizer.requestAuthorization({_ in})
         do{
-            //Prepare the microphone
+            //Kill old tasks (if any)
             recognitionTask?.cancel()
             self.recognitionTask = nil
             speechRecognizer.delegate = self
+            //Prepare the microphone
             let audioSession = AVAudioSession.sharedInstance()
             try audioSession.setCategory(.record, mode: .measurement, options: .duckOthers)
             try audioSession.setActive(true, options: .notifyOthersOnDeactivation)
             let inputNode = audioEngine.inputNode
-            //Prepare a recognition request, which allows me to pr
+            //Prepare a recognition request, which allows me to process speech
             recognitionRequest = SFSpeechAudioBufferRecognitionRequest()
             guard let recognitionRequest = recognitionRequest else { fatalError("Unable to create a SFSpeechAudioBufferRecognitionRequest object") }
             recognitionRequest.shouldReportPartialResults = true
